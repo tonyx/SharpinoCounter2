@@ -101,3 +101,6 @@ let Setup(eventStore: IEventStore) =
     StateCache<Counter>.Instance.Clear()
     eventStore.Reset Counter.Version Counter.StorageName
     ApplicationInstance.ApplicationInstance.Instance.ResetGuid()
+
+let doNothing whatever =
+    ()

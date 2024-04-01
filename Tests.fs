@@ -27,22 +27,21 @@ open TestUtils
 let tests =
     let pgStorageKafkaBroker = KafkaBroker.getKafkaBroker ("localhost:9092", pgStorage)
 
-
     let testConfigs2 = [
 
         // ((fun () -> SharpinoCounterApi (memoryStorage, doNothingBroker, counterStorageStateViewer)), memoryStorage, 0 )
-        // ((fun () -> SharpinoCounterApi (pgStorage, doNothingBroker, counterStorageStateViewer)), pgStorage, 0 )
+        ((fun () -> SharpinoCounterApi (pgStorage, doNothingBroker, counterStorageStateViewer)), pgStorage, doNothing )
 
         // ((fun () -> SharpinoCounterApi (memoryStorage, memoryStorageKafkaBroker, counterStorageStateViewer)), memoryStorage, 0 )
 
         // ((fun () -> SharpinoCounterApi (pgStorage, pgStorageKafkaBroker, counterStorageStateViewer)), pgStorage, 1)
-        ((fun () -> SharpinoCounterApi (pgStorage, pgStorageKafkaBroker, getCounterState())), pgStorage, 1)
+        ((fun () -> SharpinoCounterApi (pgStorage, pgStorageKafkaBroker, getCounterState())), pgStorage, assignOffSet)
 
         // ((fun () -> SharpinoCounterApi (pgStorage, pgStorageKafkaBroker, counterState)), pgStorage, true)
     ]
 
-    testList "samples" [
-        multipleTestCase "initialize counter and state is zero " testConfigs2 <| fun (api, eventStore, _) ->
+    ftestList "samples" [
+        multipleTestCase "initialize counter and state is zero " testConfigs2 <| fun (api, eventStore, eventuallyAssignOffset) ->
             Setup eventStore
             // given
             let counterApi = api ()
@@ -54,13 +53,15 @@ let tests =
             Expect.isOk state "should be ok"
             Expect.equal state.OkValue 0 "should be zero"
 
-        multipleTestCase "initialize, increment the counter and the state is one " testConfigs2 <| fun (api, eventStore, kafkaOn) ->
+        multipleTestCase "initialize, increment the counter and the state is one " testConfigs2 <| fun (api, eventStore, eventuallyAssignOffset) ->
             Setup eventStore
             // given
             let counterApi = api ()
 
             // when
             let result = counterApi.Increment()
+
+            eventuallyAssignOffset result
 
             let state = counterApi.GetState()
             Expect.isOk state "should be ok"
