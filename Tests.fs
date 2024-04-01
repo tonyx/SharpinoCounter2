@@ -47,7 +47,7 @@ let tests =
             let counterApi = api ()
 
             // when
-            let state = counterApi.GetState()
+            let state = counterApi.GetState ()
 
             // then
             Expect.isOk state "should be ok"
@@ -59,11 +59,11 @@ let tests =
             let counterApi = api ()
 
             // when
-            let result = counterApi.Increment()
+            let result = counterApi.Increment ()
 
             eventuallyAssignOffset result
 
-            let state = counterApi.GetState()
+            let state = counterApi.GetState ()
             Expect.isOk state "should be ok"
             Expect.equal state.OkValue 1 "should be zero"
 
@@ -89,11 +89,11 @@ let tests =
 
             // when
 
-            let setInitialValue = counterApi.Clear(99)
+            let setInitialValue = counterApi.Clear 99 
             Expect.isOk setInitialValue "should be ok"
 
             // then
-            let state = counterApi.GetState()
+            let state = counterApi.GetState ()
             Expect.isOk state "should be ok"
             Expect.equal state.OkValue 99 "should be 99"
 
@@ -102,10 +102,10 @@ let tests =
             // given
             let counterApi = api () 
 
-            let setInitialValue = counterApi.Clear(99)
+            let setInitialValue = counterApi.Clear 99 
             Expect.isOk setInitialValue "should be ok"
 
-            let result = counterApi.Increment()
+            let result = counterApi.Increment ()
 
             // then
             Expect.isError result "should be error"
@@ -117,7 +117,7 @@ let tests =
             let counterApi = api () 
 
             // when
-            let result = counterApi.Decrement()
+            let result = counterApi.Decrement ()
 
             // then
             Expect.isError result "should be error"
@@ -129,11 +129,11 @@ let tests =
             let counterApi = api ()
 
             // when
-            let _ = counterApi.Increment()
-            let _ = counterApi.Clear()
+            let _ = counterApi.Increment ()
+            let _ = counterApi.Clear ()
 
             // then
-            let state = counterApi.GetState()
+            let state = counterApi.GetState ()
             Expect.isOk state "should be ok"
             Expect.equal state.OkValue 0 "should be zero"
 
@@ -143,7 +143,7 @@ let tests =
             let counterApi = api ()
 
             // when
-            let _ = counterApi.Clear(10)
+            let _ = counterApi.Clear 10 
 
             // then
             let state = counterApi.GetState()
