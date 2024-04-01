@@ -23,13 +23,13 @@
   <ItemGroup>
     <PackageReference Include="Expecto" Version="10.2.1" />
     <PackageReference Include="FsToolkit.ErrorHandling" Version="4.15.1" />
-    <!-- <PackageReference Include="Sharpino" Version="1.5.9" />
-    <PackageReference Include="Sharpino.Core" Version="1.1.2" /> -->
+    <PackageReference Include="Sharpino" Version="1.5.9" />
+    <PackageReference Include="Sharpino.Core" Version="1.1.2" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!-- <ItemGroup>
     <ProjectReference Include="..\..\realsharpino\Sharpino\Sharpino.Lib\Sharpino.Lib.fsproj" />
     <ProjectReference Include="..\..\realsharpino\Sharpino\Sharpino.Lib.Core\Sharpino.Lib.Core.fsproj" />
-  </ItemGroup>
+  </ItemGroup> -->
 
 </Project>
