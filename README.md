@@ -18,6 +18,16 @@ Create a file named .env with content like this (substituting the postgresuserna
 ```bash
 DATABASE_URL="postgres://postgresusername:postgrespassword@127.0.0.1:5432/es_counter?sslmode=disable"
 ```
+
+on Kafka create a topic named "counter"
+```bash
+kafka-topics.sh --create --topic counter-01 --bootstrap-server localhost:9092
+```
+
+then run the commands:
+
+```bash
+```
 then run the commands:
 
 ```bash
