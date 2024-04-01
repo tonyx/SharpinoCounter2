@@ -3,6 +3,7 @@ module KafkaTests
 
 open System
 open Sharpino
+open Sharpino.Utils
 open Expecto
 open sharpinoCounter.SharpinoCounterApi
 
@@ -14,7 +15,7 @@ let kafkaImplementationTests =
 
     let pgStorageKafkaBroker = KafkaBroker.getKafkaBroker ("localhost:9092", pgStorage)
 
-    ftestList "samples" [
+    testList "samples" [
         testCase "initialize counter and state is zero "  <| fun _ ->
             Setup pgStorage
 
@@ -83,7 +84,7 @@ let kafkaImplementationTests =
 
             // then
             Expect.isError result "should be error"
-            Expect.equal (Result.getError result) "must be lower than 99" "should be 'must be lower than 99'"
+            Expect.equal (getError result) "must be lower than 99" "should be 'must be lower than 99'"
 
         testCase "increment and clear" <| fun _ ->
             Setup pgStorage
